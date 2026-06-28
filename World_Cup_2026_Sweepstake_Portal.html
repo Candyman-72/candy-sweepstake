@@ -269,6 +269,7 @@
   /* install modal */
   .modal-overlay{position:fixed;inset:0;z-index:50;background:rgba(8,10,14,.55);
     display:flex;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(2px)}
+  .modal-overlay[hidden]{display:none}
   .modal{background:var(--card);border:1px solid var(--line);border-radius:14px;max-width:380px;width:100%;
     padding:20px 20px 22px;box-shadow:var(--shadow-lg);position:relative}
   .modal-x{position:absolute;top:10px;right:12px;border:none;background:none;font-size:1.5rem;line-height:1;
@@ -998,6 +999,7 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
   const isAndroid=/android/i.test(ua);
   const standalone=window.matchMedia('(display-mode: standalone)').matches || navigator.standalone===true;
   if(standalone){ ib.style.display='none'; return; }   // already installed
+  if(isIOS){ ib.style.display='none'; return; }         // iOS can't auto-install; use Safari Share → Add to Home Screen
 
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;});
   window.addEventListener('appinstalled',()=>{ ib.style.display='none'; close(); });
