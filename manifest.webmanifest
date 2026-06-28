@@ -1,0 +1,16 @@
+{
+  "name": "The Candy Family Sweepstake",
+  "short_name": "Sweepstake",
+  "description": "FIFA World Cup 2026 family sweepstake — leaderboard, league tables, bracket, odds and TVNZ+ schedule.",
+  "start_url": "./World_Cup_2026_Sweepstake_Portal.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0c0d11",
+  "theme_color": "#0c0d11",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
