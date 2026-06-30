@@ -208,10 +208,16 @@
   .bm-slot{display:flex;align-items:center;gap:7px;padding:5px 8px}
   .bm-slot+.bm-slot{border-top:1px solid var(--line-2)}
   .bm-flag{font-size:1rem;width:18px;text-align:center;flex:none}
-  .bm-code{font-weight:700;font-size:.8rem;color:var(--ink);letter-spacing:.01em}
+  .bm-code{font-weight:700;font-size:.8rem;color:var(--ink);letter-spacing:.01em;flex:1}
   .bm-own{font-size:.57rem;color:var(--accent);font-weight:700;margin-left:auto;text-transform:uppercase;letter-spacing:.03em}
   .bm-slot.tbd .bm-code{color:var(--muted);font-weight:600;font-size:.7rem}
   .bm-slot.tbd .bm-flag{opacity:.35}
+  .bm-score{font-weight:800;font-variant-numeric:tabular-nums;color:var(--muted);min-width:14px;text-align:center}
+  .bm-slot.win .bm-code{color:var(--green-d)}
+  .bm-slot.win .bm-score{color:var(--green-d)}
+  .bm-own{margin-left:6px}
+  .bm-box.done .bm-meta b{color:var(--green-d)}
+  .bm-box.done{border-color:var(--line)}
   /* connectors */
   .col:not(:last-child) .bm::after{content:"";position:absolute;right:-11px;top:50%;width:11px;height:2px;background:var(--line)}
   .col:not(:last-child) .bm:nth-child(odd)::before{content:"";position:absolute;right:-11px;top:50%;width:2px;height:calc(50% + 1px);background:var(--line)}
@@ -348,7 +354,7 @@
   </div>
   <div class="wrap"><div class="statbar">
     <div class="stat"><div class="k">Current stage</div><div class="v">Round of 32</div></div>
-    <div class="stat"><div class="k">Teams remaining</div><div class="v">32 of 48</div></div>
+    <div class="stat"><div class="k">Teams remaining</div><div class="v" id="statRemain">—</div></div>
     <div class="stat"><div class="k">Sweepstake leader</div><div class="v" id="statLeader">—</div></div>
     <div class="stat"><div class="k">Final</div><div class="v">19 Jul · New Jersey</div></div>
   </div></div>
@@ -504,7 +510,7 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF = "28 June 2026 — Round of 32 set (all 32 qualifiers confirmed)";
+const ASOF = "30 June 2026 — Round of 32 underway (Canada, Paraguay & Brazil into the last 16; Germany out on penalties)";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -522,32 +528,32 @@ const FLAGS = {
 // team: [name, group, fifaRank, W, D, L, status, stage, oddsAmerican(null if out)]
 const TEAMS = [
  ["Mexico","A",15,3,0,0,"in","r32",5000],
- ["South Africa","A",60,1,1,1,"in","r32",50000],
+ ["South Africa","A",60,1,1,1,"out","r32",null],
  ["South Korea","A",25,1,0,2,"out",null,null],
  ["Czechia","A",41,0,1,2,"out",null,null],
 
  ["Switzerland","B",19,2,1,0,"in","r32",7000],
- ["Canada","B",30,1,1,1,"in","r32",25000],
+ ["Canada","B",30,1,1,1,"in","r16",25000],
  ["Bosnia and Herzegovina","B",71,1,1,1,"in","r32",40000],
  ["Qatar","B",53,0,1,2,"out",null,null],
 
- ["Brazil","C",6,2,1,0,"in","r32",900],
+ ["Brazil","C",6,2,1,0,"in","r16",900],
  ["Morocco","C",8,2,1,0,"in","r32",5000],
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
 
  ["United States","D",16,2,0,1,"in","r32",5500],
  ["Australia","D",27,1,1,1,"in","r32",30000],
- ["Paraguay","D",38,1,1,1,"in","r32",25000],
+ ["Paraguay","D",38,1,1,1,"in","r16",25000],
  ["Türkiye","D",22,1,0,2,"out",null,null],
 
- ["Germany","E",10,2,0,1,"in","r32",1300],
+ ["Germany","E",10,2,0,1,"out","r32",null],
  ["Côte d'Ivoire","E",39,2,0,1,"in","r32",25000],
  ["Ecuador","E",23,1,1,1,"in","r32",20000],
  ["Curaçao","E",81,0,1,2,"out",null,null],
 
  ["Netherlands","F",7,2,1,0,"in","r32",1600],
- ["Japan","F",18,1,2,0,"in","r32",5000],
+ ["Japan","F",18,1,2,0,"out","r32",null],
  ["Sweden","F",37,1,1,1,"in","r32",20000],
  ["Tunisia","F",47,0,0,3,"out",null,null],
 
@@ -864,6 +870,15 @@ const MATCHES = {
  102:{a:{w:99},b:{w:100},date:"16 Jul",time:"7:00am"},
  104:{a:{w:101},b:{w:102},date:"20 Jul",time:"7:00am"}
 };
+// Played knockout results: match id -> {a:homeScore, b:awayScore, w:"Winner team", pen?:"pen winner"}
+const RESULTS = {
+ 73:{a:0,b:1,w:"Canada"},          // South Africa 0–1 Canada
+ 74:{a:1,b:1,w:"Paraguay",pen:"4–3"}, // Germany 1–1 Paraguay (Paraguay win 4–3 on pens)
+ 76:{a:2,b:1,w:"Brazil"}           // Brazil 2–1 Japan
+};
+function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
+function resolveTeam(slot){ return slot.t ? slot.t : (slot.w ? winnerOf(slot.w) : null); }
+
 // vertical render order so adjacent pairs feed the next round
 const ORDERS = {
  R32:[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87],
@@ -873,24 +888,29 @@ const ORDERS = {
 const COLHEAD = {R32:["Round of 32","28 Jun – 4 Jul"],R16:["Round of 16","4 – 7 Jul"],
  QF:["Quarter-finals","9 – 12 Jul"],SF:["Semi-finals","15 – 16 Jul"],F:["Final","19 Jul"]};
 
-function slotHTML(slot){
-  if(slot.t){
-    const owner=ownerOf(slot.t);
-    return `<div class="bm-slot"><span class="bm-flag">${FLAGS[slot.t]||'⚽'}</span>`+
-      `<span class="bm-code">${CODES[slot.t]||slot.t}</span>`+
+function slotHTML(slot, score, win){
+  const team = resolveTeam(slot);
+  if(team){
+    const owner=ownerOf(team);
+    return `<div class="bm-slot${win?' win':''}"><span class="bm-flag">${FLAGS[team]||'⚽'}</span>`+
+      `<span class="bm-code">${CODES[team]||team}</span>`+
+      (score!=null?`<span class="bm-score">${score}</span>`:'')+
       `<span class="bm-own">${owner!=="—"?owner:""}</span></div>`;
   }
   const label = slot.w ? ("Winner "+slot.w) : slot.d;
   return `<div class="bm-slot tbd"><span class="bm-flag">▢</span><span class="bm-code">${label}</span></div>`;
 }
 function matchHTML(id,col,isFirst){
-  const m=MATCHES[id];
-  const live = col==="R32" && (m.a.t || m.b.t);
-  const dt = m.date ? `<span>${m.date} · ${m.time}</span>` : `<span></span>`;
+  const m=MATCHES[id], r=RESULTS[id];
+  const ta=resolveTeam(m.a), tb=resolveTeam(m.b);
+  const played = !!r;
+  const live = !played && (ta||tb);
+  const meta = played ? `<b>M${id}</b><span>Full time${r.pen?` · pens ${r.pen}`:''}</span>`
+                      : `<b>M${id}</b>${m.date?`<span>${m.date} · ${m.time}</span>`:'<span></span>'}`;
   return `<div class="bm">${isFirst?'':'<i class="lin"></i>'}
-    <div class="bm-box ${live?'live':''}">
-      <div class="bm-meta"><b>M${id}</b>${dt}</div>
-      ${slotHTML(m.a)}${slotHTML(m.b)}
+    <div class="bm-box ${played?'done':(live?'live':'')}">
+      <div class="bm-meta">${meta}</div>
+      ${slotHTML(m.a, r?r.a:null, r&&r.w===ta)}${slotHTML(m.b, r?r.b:null, r&&r.w===tb)}
     </div></div>`;
 }
 function renderDraw(){
@@ -956,7 +976,9 @@ function renderSchedule(){
 /* ===================== INIT ===================== */
 document.getElementById('asof').textContent = "Updated as of "+ASOF;
 (function(){const L=Object.keys(MEMBERS).map(memberStats).sort((a,b)=>b.total-a.total)[0];
- document.getElementById('statLeader').textContent = `${L.name} · ${L.total} pts`;})();
+ document.getElementById('statLeader').textContent = `${L.name} · ${L.total} pts`;
+ const left=TEAMS.filter(t=>t[6]!=='out').length;
+ document.getElementById('statRemain').textContent = `${left} of 48`;})();
 
 /* ---- theme toggle (persists across sessions) ---- */
 (function(){
