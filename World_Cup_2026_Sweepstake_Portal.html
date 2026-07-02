@@ -224,6 +224,9 @@
   .col:not(:last-child) .bm:nth-child(even)::before{content:"";position:absolute;right:-11px;bottom:50%;width:2px;height:calc(50% + 1px);background:var(--line)}
   .bm .lin{position:absolute;left:-11px;top:50%;width:11px;height:2px;background:var(--line)}
   .finalcap{text-align:center;font-size:.66rem;color:var(--faint);margin-top:8px}
+  .tpwrap{max-width:280px}
+  .tpwrap .bm{padding:0}
+  .tpwrap .lin{display:none}
   /* draw */
   .matchgrid{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
   .match{padding:13px 16px;transition:box-shadow .15s,border-color .15s}
@@ -410,6 +413,10 @@
     <div class="brackethint">Scroll horizontally to follow the bracket through to the Final →</div>
     <div class="bkt-scroll"><div class="bkt" id="bracket"></div></div>
 
+    <h2 class="sec" style="margin-top:26px">Third-place play-off — 18 July</h2>
+    <div class="note">Contested by the two beaten semi-finalists. Fills in once both semi-finals have been played.</div>
+    <div class="tpwrap" id="thirdPlace"></div>
+
     <h2 class="sec" style="margin-top:26px">Qualified so far — by group</h2>
     <div class="legend">
       <span><i class="dot" style="background:var(--accent)"></i> Group winner</span>
@@ -501,7 +508,7 @@
 </div>
 
 <footer>
-  Built for the Candy family sweepstake · Data as of 1 July 2026 · Results &amp; odds from public sources, for fun only.
+  Built for the Candy family sweepstake · Data as of 2 July 2026 · Results &amp; odds from public sources, for fun only.
 </footer>
 
 <script>
@@ -510,7 +517,7 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF = "1 July 2026 — Round of 32 underway: Netherlands eliminated on penalties by Morocco; Norway, France and Mexico through to the last 16 — England, Belgium & USA still to play";
+const ASOF = "2 July 2026 — Round of 32 winding down: England (Kane x2), Belgium (AET) and USA all through to the last 16, eliminating DR Congo, Senegal and Bosnia and Herzegovina — Spain, Portugal, Switzerland, Australia, Argentina and Colombia still to play";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -534,7 +541,7 @@ const TEAMS = [
 
  ["Switzerland","B",19,2,1,0,"in","r32",7000],
  ["Canada","B",30,1,1,1,"in","r16",25000],
- ["Bosnia and Herzegovina","B",71,1,1,1,"in","r32",40000],
+ ["Bosnia and Herzegovina","B",71,1,1,1,"out","r32",null],
  ["Qatar","B",53,0,1,2,"out",null,null],
 
  ["Brazil","C",6,2,1,0,"in","r16",900],
@@ -542,7 +549,7 @@ const TEAMS = [
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
 
- ["United States","D",16,2,0,1,"in","r32",5500],
+ ["United States","D",16,2,0,1,"in","r16",3300],
  ["Australia","D",27,1,1,1,"in","r32",30000],
  ["Paraguay","D",38,1,1,1,"in","r16",25000],
  ["Türkiye","D",22,1,0,2,"out",null,null],
@@ -557,7 +564,7 @@ const TEAMS = [
  ["Sweden","F",37,1,1,1,"out","r32",null],
  ["Tunisia","F",47,0,0,3,"out",null,null],
 
- ["Belgium","G",9,1,2,0,"in","r32",2200],
+ ["Belgium","G",9,1,2,0,"in","r16",3500],
  ["Egypt","G",33,1,2,0,"in","r32",20000],
  ["Iran","G",21,0,3,0,"out",null,null],
  ["New Zealand","G",88,0,1,2,"out",null,null],
@@ -569,7 +576,7 @@ const TEAMS = [
 
  ["France","I",1,3,0,0,"in","r16",250],
  ["Norway","I",32,2,0,1,"in","r16",2500],
- ["Senegal","I",14,1,0,2,"in","r32",15000],
+ ["Senegal","I",14,1,0,2,"out","r32",null],
  ["Iraq","I",56,0,0,3,"out",null,null],
 
  ["Argentina","J",3,3,0,0,"in","r32",400],
@@ -580,9 +587,9 @@ const TEAMS = [
  ["Portugal","K",5,2,1,0,"in","r32",1300],
  ["Colombia","K",13,2,0,1,"in","r32",4000],
  ["Uzbekistan","K",57,0,0,3,"out",null,null],
- ["DR Congo","K",55,1,1,1,"in","r32",50000],
+ ["DR Congo","K",55,1,1,1,"out","r32",null],
 
- ["England","L",4,2,1,0,"in","r32",700],
+ ["England","L",4,2,1,0,"in","r16",850],
  ["Ghana","L",73,1,2,0,"in","r32",30000],
  ["Croatia","L",11,1,1,1,"in","r32",8000],
  ["Panama","L",51,0,0,2,"out",null,null]
@@ -868,6 +875,7 @@ const MATCHES = {
  100:{a:{w:95},b:{w:96}},
  101:{a:{w:97},b:{w:98},date:"15 Jul",time:"7:00am"},
  102:{a:{w:99},b:{w:100},date:"16 Jul",time:"7:00am"},
+ 103:{a:{l:101},b:{l:102},date:"18 Jul",time:"7:00am"},
  104:{a:{w:101},b:{w:102},date:"20 Jul",time:"7:00am"}
 };
 // Played knockout results: match id -> {a:homeScore, b:awayScore, w:"Winner team", pen?:"pen winner"}
@@ -878,10 +886,25 @@ const RESULTS = {
  76:{a:2,b:1,w:"Brazil"},          // Brazil 2–1 Japan
  77:{a:3,b:0,w:"France"},          // France 3–0 Sweden
  78:{a:1,b:2,w:"Norway"},          // Côte d'Ivoire 1–2 Norway (Haaland winner, 86')
- 79:{a:2,b:0,w:"Mexico"}           // Mexico 2–0 Ecuador
+ 79:{a:2,b:0,w:"Mexico"},          // Mexico 2–0 Ecuador
+ 80:{a:2,b:1,w:"England"},         // England 2–1 DR Congo (Kane brace)
+ 81:{a:2,b:0,w:"United States"},   // United States 2–0 Bosnia and Herzegovina
+ 82:{a:3,b:2,w:"Belgium"}          // Belgium 3–2 Senegal (AET, Tielemans 125')
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
-function resolveTeam(slot){ return slot.t ? slot.t : (slot.w ? winnerOf(slot.w) : null); }
+function loserOf(id){
+  const r = RESULTS[id]; if(!r) return null;
+  const m = MATCHES[id];
+  const ta = resolveTeam(m.a), tb = resolveTeam(m.b);
+  if(!ta || !tb) return null;
+  return r.w===ta ? tb : ta;
+}
+function resolveTeam(slot){
+  if(slot.t) return slot.t;
+  if(slot.w!=null) return winnerOf(slot.w);
+  if(slot.l!=null) return loserOf(slot.l);
+  return null;
+}
 
 // vertical render order so adjacent pairs feed the next round
 const ORDERS = {
@@ -901,7 +924,7 @@ function slotHTML(slot, score, win){
       (score!=null?`<span class="bm-score">${score}</span>`:'')+
       `<span class="bm-own">${owner!=="—"?owner:""}</span></div>`;
   }
-  const label = slot.w ? ("Winner "+slot.w) : slot.d;
+  const label = slot.w!=null ? ("Winner M"+slot.w) : (slot.l!=null ? ("Loser M"+slot.l) : slot.d);
   return `<div class="bm-slot tbd"><span class="bm-flag">▢</span><span class="bm-code">${label}</span></div>`;
 }
 function matchHTML(id,col,isFirst){
@@ -924,11 +947,13 @@ function renderDraw(){
     const [h,sub]=COLHEAD[col];
     let body='';
     ORDERS[col].forEach(id=>body+=matchHTML(id,col,ci===0));
-    const cap = col==="F" ? `<div class="finalcap">🏆 Champion lifts the trophy<br>3rd-place play-off · 18 Jul</div>` : '';
+    const cap = col==="F" ? `<div class="finalcap">🏆 Champion lifts the trophy</div>` : '';
     html+=`<div class="col"><div class="col-head">${h}<small>${sub}</small></div>
       <div class="col-body">${body}</div>${cap}</div>`;
   });
   document.getElementById('bracket').innerHTML=html;
+
+  document.getElementById('thirdPlace').innerHTML = matchHTML(103,'TP',true);
 
   // qualified by group
   const groups={};
