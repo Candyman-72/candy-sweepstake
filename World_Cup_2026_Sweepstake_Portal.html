@@ -511,7 +511,7 @@
 </div>
 
 <footer>
-  Built for the Candy family sweepstake · Data as of 4 July 2026 · Results &amp; odds from public sources, for fun only.
+  Built for the Candy family sweepstake · Data as of 5 July 2026 · Results &amp; odds from public sources, for fun only.
 </footer>
 
 <script>
@@ -520,8 +520,8 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF_DATE = "4 July 2026";
-const ASOF = "Round of 32 complete: Colombia beat Ghana 1–0 to join Spain, Portugal, Switzerland, Argentina, Egypt, England, Belgium, France, Norway, Mexico, Canada, Brazil, Morocco and Paraguay in the last 16. Round of 16 kicks off today (Canada v Morocco, Paraguay v France).";
+const ASOF_DATE = "5 July 2026";
+const ASOF = "Round of 16 underway: Morocco thrashed Canada 3–0 (Ounahi x2) and France edged Paraguay 1–0 (Mbappé pen) — both into the quarter-finals. Brazil v Norway and Mexico v England are up next.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -544,18 +544,18 @@ const TEAMS = [
  ["Czechia","A",41,0,1,2,"out",null,null],
 
  ["Switzerland","B",19,2,1,0,"in","r16",5000],
- ["Canada","B",30,1,1,1,"in","r16",25000],
+ ["Canada","B",30,1,1,1,"out","r16",null],
  ["Bosnia and Herzegovina","B",71,1,1,1,"out","r32",null],
  ["Qatar","B",53,0,1,2,"out",null,null],
 
  ["Brazil","C",6,2,1,0,"in","r16",900],
- ["Morocco","C",8,2,1,0,"in","r16",4000],
+ ["Morocco","C",8,2,1,0,"in","qf",3000],
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
 
  ["United States","D",16,2,0,1,"in","r16",3300],
  ["Australia","D",27,1,1,1,"out","r32",null],
- ["Paraguay","D",38,1,1,1,"in","r16",25000],
+ ["Paraguay","D",38,1,1,1,"out","r16",null],
  ["Türkiye","D",22,1,0,2,"out",null,null],
 
  ["Germany","E",10,2,0,1,"out","r32",null],
@@ -578,7 +578,7 @@ const TEAMS = [
  ["Uruguay","H",17,0,2,1,"out",null,null],
  ["Saudi Arabia","H",58,0,1,2,"out",null,null],
 
- ["France","I",1,3,0,0,"in","r16",191],
+ ["France","I",1,3,0,0,"in","qf",150],
  ["Norway","I",32,2,0,1,"in","r16",2500],
  ["Senegal","I",14,1,0,2,"out","r32",null],
  ["Iraq","I",56,0,0,3,"out",null,null],
@@ -870,9 +870,9 @@ const MATCHES = {
  88:{a:{t:"Australia"},b:{t:"Egypt"},date:"4 Jul",time:"6:00am"},
  89:{a:{w:74},b:{w:77},date:"5 Jul",time:"9:00am"},
  90:{a:{w:73},b:{w:75},date:"5 Jul",time:"5:00am"},
- 91:{a:{w:76},b:{w:78}}, 92:{a:{w:79},b:{w:80}},
- 93:{a:{w:83},b:{w:84}}, 94:{a:{w:81},b:{w:82}},
- 95:{a:{w:86},b:{w:88}}, 96:{a:{w:85},b:{w:87}},
+ 91:{a:{w:76},b:{w:78},date:"6 Jul",time:"8:00am"}, 92:{a:{w:79},b:{w:80},date:"6 Jul",time:"12:00pm"},
+ 93:{a:{w:87},b:{w:84},date:"7 Jul",time:"7:00am"}, 94:{a:{w:81},b:{w:82},date:"7 Jul",time:"12:00pm"},
+ 95:{a:{w:86},b:{w:88},date:"8 Jul",time:"4:00am"}, 96:{a:{w:85},b:{w:83},date:"8 Jul",time:"8:00am"},
  97:{a:{w:89},b:{w:90},date:"10 Jul",time:"8:00am"},
  98:{a:{w:93},b:{w:94}}, 99:{a:{w:91},b:{w:92},date:"12 Jul",time:"9:00am"},
  100:{a:{w:95},b:{w:96}},
@@ -898,7 +898,9 @@ const RESULTS = {
  86:{a:3,b:2,w:"Argentina"},       // Argentina 3–2 Cabo Verde (AET, Romero 111')
  87:{a:2,b:1,w:"Portugal"},        // Portugal 2–1 Croatia (Ramos 90+4')
  88:{a:1,b:1,w:"Egypt",pen:"4–2"}, // Australia 1–1 Egypt (Egypt win 4–2 on pens)
- 83:{a:1,b:0,w:"Colombia"}        // Colombia 1–0 Ghana (Jhon Arias 14')
+ 83:{a:1,b:0,w:"Colombia"},       // Colombia 1–0 Ghana (Jhon Arias 14')
+ 89:{a:0,b:1,w:"France"},         // Paraguay 0–1 France (Mbappé pen, 70')
+ 90:{a:0,b:3,w:"Morocco"}         // Canada 0–3 Morocco (Ounahi x2, Rahimi)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
@@ -998,7 +1000,7 @@ function renderDraw(){
 
   const nIn=TEAMS.filter(t=>t[6]==='in').length;
   document.getElementById('drawnote').innerHTML =
-    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 4 Jul 2026). `+
+    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 5 Jul 2026). `+
     `Each fixture shows the team and its owning family member; Round of 16 onward fills in as winners advance.`;
 }
 
