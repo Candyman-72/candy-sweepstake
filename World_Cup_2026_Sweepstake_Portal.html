@@ -511,7 +511,7 @@
 </div>
 
 <footer>
-  Built for the Candy family sweepstake · Data as of 5 July 2026 · Results &amp; odds from public sources, for fun only.
+  Built for the Candy family sweepstake · Data as of 6 July 2026 · Results &amp; odds from public sources, for fun only.
 </footer>
 
 <script>
@@ -520,8 +520,8 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF_DATE = "5 July 2026";
-const ASOF = "Round of 16 underway: Morocco thrashed Canada 3–0 (Ounahi x2) and France edged Paraguay 1–0 (Mbappé pen) — both into the quarter-finals. Brazil v Norway and Mexico v England are up next.";
+const ASOF_DATE = "6 July 2026";
+const ASOF = "Round of 16 continues: Morocco thrashed Canada 3–0, France edged Paraguay 1–0, and Norway stunned Brazil 2–1 (Haaland brace) to reach the quarter-finals. Mexico v England, Portugal v Spain and USA v Belgium are still to come.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -548,7 +548,7 @@ const TEAMS = [
  ["Bosnia and Herzegovina","B",71,1,1,1,"out","r32",null],
  ["Qatar","B",53,0,1,2,"out",null,null],
 
- ["Brazil","C",6,2,1,0,"in","r16",900],
+ ["Brazil","C",6,2,1,0,"out","r16",null],
  ["Morocco","C",8,2,1,0,"in","qf",3000],
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
@@ -579,7 +579,7 @@ const TEAMS = [
  ["Saudi Arabia","H",58,0,1,2,"out",null,null],
 
  ["France","I",1,3,0,0,"in","qf",150],
- ["Norway","I",32,2,0,1,"in","r16",2500],
+ ["Norway","I",32,2,0,1,"in","qf",1400],
  ["Senegal","I",14,1,0,2,"out","r32",null],
  ["Iraq","I",56,0,0,3,"out",null,null],
 
@@ -900,7 +900,8 @@ const RESULTS = {
  88:{a:1,b:1,w:"Egypt",pen:"4–2"}, // Australia 1–1 Egypt (Egypt win 4–2 on pens)
  83:{a:1,b:0,w:"Colombia"},       // Colombia 1–0 Ghana (Jhon Arias 14')
  89:{a:0,b:1,w:"France"},         // Paraguay 0–1 France (Mbappé pen, 70')
- 90:{a:0,b:3,w:"Morocco"}         // Canada 0–3 Morocco (Ounahi x2, Rahimi)
+ 90:{a:0,b:3,w:"Morocco"},        // Canada 0–3 Morocco (Ounahi x2, Rahimi)
+ 91:{a:1,b:2,w:"Norway"}          // Brazil 1–2 Norway (Haaland x2, Neymar pen for Brazil)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
@@ -1000,7 +1001,7 @@ function renderDraw(){
 
   const nIn=TEAMS.filter(t=>t[6]==='in').length;
   document.getElementById('drawnote').innerHTML =
-    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 5 Jul 2026). `+
+    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 6 Jul 2026). `+
     `Each fixture shows the team and its owning family member; Round of 16 onward fills in as winners advance.`;
 }
 
