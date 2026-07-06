@@ -521,7 +521,7 @@
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
 const ASOF_DATE = "6 July 2026";
-const ASOF = "Round of 16 continues: Morocco thrashed Canada 3–0, France edged Paraguay 1–0, and Norway stunned Brazil 2–1 (Haaland brace) to reach the quarter-finals. Mexico v England, Portugal v Spain and USA v Belgium are still to come.";
+const ASOF = "Round of 16 continues: Morocco, France, Norway (2–1 over Brazil, Haaland brace) and now England (3–2 over Mexico, Bellingham x2, Kane pen) are through to the quarter-finals. Portugal v Spain and USA v Belgium are still to come.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -538,7 +538,7 @@ const FLAGS = {
 
 // team: [name, group, fifaRank, W, D, L, status, stage, oddsAmerican(null if out)]
 const TEAMS = [
- ["Mexico","A",15,3,0,0,"in","r16",4000],
+ ["Mexico","A",15,3,0,0,"out","r16",null],
  ["South Africa","A",60,1,1,1,"out","r32",null],
  ["South Korea","A",25,1,0,2,"out",null,null],
  ["Czechia","A",41,0,1,2,"out",null,null],
@@ -554,6 +554,7 @@ const TEAMS = [
  ["Haiti","C",79,0,0,3,"out",null,null],
 
  ["United States","D",16,2,0,1,"in","r16",3300],
+
  ["Australia","D",27,1,1,1,"out","r32",null],
  ["Paraguay","D",38,1,1,1,"out","r16",null],
  ["Türkiye","D",22,1,0,2,"out",null,null],
@@ -593,7 +594,7 @@ const TEAMS = [
  ["Uzbekistan","K",57,0,0,3,"out",null,null],
  ["DR Congo","K",55,1,1,1,"out","r32",null],
 
- ["England","L",4,2,1,0,"in","r16",850],
+ ["England","L",4,2,1,0,"in","qf",600],
  ["Ghana","L",73,1,2,0,"out","r32",null],
  ["Croatia","L",11,1,1,1,"out","r32",null],
  ["Panama","L",51,0,0,2,"out",null,null]
@@ -901,7 +902,8 @@ const RESULTS = {
  83:{a:1,b:0,w:"Colombia"},       // Colombia 1–0 Ghana (Jhon Arias 14')
  89:{a:0,b:1,w:"France"},         // Paraguay 0–1 France (Mbappé pen, 70')
  90:{a:0,b:3,w:"Morocco"},        // Canada 0–3 Morocco (Ounahi x2, Rahimi)
- 91:{a:1,b:2,w:"Norway"}          // Brazil 1–2 Norway (Haaland x2, Neymar pen for Brazil)
+ 91:{a:1,b:2,w:"Norway"},         // Brazil 1–2 Norway (Haaland x2, Neymar pen for Brazil)
+ 92:{a:2,b:3,w:"England"}         // Mexico 2–3 England (Bellingham x2, Kane pen)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
