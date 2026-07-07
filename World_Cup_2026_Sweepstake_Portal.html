@@ -416,7 +416,7 @@
     <div class="brackethint">Scroll horizontally to follow the bracket through to the Final →</div>
     <div class="bkt-scroll"><div class="bkt" id="bracket"></div></div>
 
-    <h2 class="sec" style="margin-top:26px">Third-place play-off — 18 July</h2>
+    <h2 class="sec" style="margin-top:26px">Third-place play-off — Sun 19 July, 9:00am NZ</h2>
     <div class="note">Contested by the two beaten semi-finalists. Fills in once both semi-finals have been played.</div>
     <div class="tpwrap" id="thirdPlace"></div>
 
@@ -470,8 +470,8 @@
     <h2 class="sec" style="margin-top:24px">Tournament stages</h2>
     <table class="lb"><tbody>
       <tr><td>Group stage</td><td>11 – 27 June ✅ complete</td></tr>
-      <tr><td><b>Round of 32</b></td><td><b>28 June – 3 July ◀ now</b></td></tr>
-      <tr><td>Round of 16</td><td>4 – 7 July</td></tr>
+      <tr><td>Round of 32</td><td>28 June – 3 July ✅ complete</td></tr>
+      <tr><td><b>Round of 16</b></td><td><b>4 – 7 July ◀ now</b></td></tr>
       <tr><td>Quarter-finals</td><td>9 – 11 July</td></tr>
       <tr><td>Semi-finals</td><td>14 – 15 July</td></tr>
       <tr><td>Third-place play-off</td><td>18 July</td></tr>
@@ -511,7 +511,7 @@
 </div>
 
 <footer>
-  Built for the Candy family sweepstake · Data as of 6 July 2026 · Results &amp; odds from public sources, for fun only.
+  Built for the Candy family sweepstake · Data as of 7 July 2026 · Results &amp; odds from public sources, for fun only.
 </footer>
 
 <script>
@@ -521,7 +521,7 @@
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
 const ASOF_DATE = "7 July 2026";
-const ASOF = "Quarter-finals taking shape: Spain edged Portugal 1–0 (Merino 90+') and Belgium routed the USA 4–1 (De Ketelaere x2). QFs so far: France v Morocco, Spain v Belgium, Norway v England. Last two R16 games — Argentina v Egypt and Switzerland v Colombia — are tomorrow morning NZ time.";
+const ASOF = "Quarter-final line-up almost set: Spain edged Portugal 1–0 (Merino 90+1') and Belgium routed the USA 4–1 (De Ketelaere x2). Confirmed QFs — France v Morocco (Fri 10 Jul 8:00am), Spain v Belgium (Sat 11 Jul 7:00am), Norway v England (Sun 12 Jul 9:00am). Last two R16 games — Argentina v Egypt (4:00am) and Switzerland v Colombia (8:00am) — kick off tomorrow morning NZ time.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -879,7 +879,7 @@ const MATCHES = {
  100:{a:{w:95},b:{w:96},date:"12 Jul",time:"1:00pm"},
  101:{a:{w:97},b:{w:98},date:"15 Jul",time:"7:00am"},
  102:{a:{w:99},b:{w:100},date:"16 Jul",time:"7:00am"},
- 103:{a:{l:101},b:{l:102},date:"18 Jul",time:"7:00am"},
+ 103:{a:{l:101},b:{l:102},date:"19 Jul",time:"9:00am"},
  104:{a:{w:101},b:{w:102},date:"20 Jul",time:"7:00am"}
 };
 // Played knockout results: match id -> {a:homeScore, b:awayScore, w:"Winner team", pen?:"pen winner"}
@@ -929,7 +929,7 @@ const ORDERS = {
  QF:[97,98,99,100], SF:[101,102], F:[104]
 };
 const COLHEAD = {R32:["Round of 32","28 Jun – 4 Jul"],R16:["Round of 16","4 – 7 Jul"],
- QF:["Quarter-finals","9 – 12 Jul"],SF:["Semi-finals","15 – 16 Jul"],F:["Final","19 Jul"]};
+ QF:["Quarter-finals","10 – 12 Jul"],SF:["Semi-finals","15 – 16 Jul"],F:["Final","20 Jul"]};
 
 function slotHTML(slot, score, win){
   const team = resolveTeam(slot);
