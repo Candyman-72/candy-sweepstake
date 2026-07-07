@@ -520,8 +520,8 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF_DATE = "6 July 2026";
-const ASOF = "Round of 16 continues: Morocco, France, Norway (2–1 over Brazil, Haaland brace) and now England (3–2 over Mexico, Bellingham x2, Kane pen) are through to the quarter-finals. Portugal v Spain and USA v Belgium are still to come.";
+const ASOF_DATE = "7 July 2026";
+const ASOF = "Quarter-finals taking shape: Spain edged Portugal 1–0 (Merino 90+') and Belgium routed the USA 4–1 (De Ketelaere x2). QFs so far: France v Morocco, Spain v Belgium, Norway v England. Last two R16 games — Argentina v Egypt and Switzerland v Colombia — are tomorrow morning NZ time.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -553,7 +553,7 @@ const TEAMS = [
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
 
- ["United States","D",16,2,0,1,"in","r16",3300],
+ ["United States","D",16,2,0,1,"out","r16",null],
 
  ["Australia","D",27,1,1,1,"out","r32",null],
  ["Paraguay","D",38,1,1,1,"out","r16",null],
@@ -569,12 +569,12 @@ const TEAMS = [
  ["Sweden","F",37,1,1,1,"out","r32",null],
  ["Tunisia","F",47,0,0,3,"out",null,null],
 
- ["Belgium","G",9,1,2,0,"in","r16",3500],
+ ["Belgium","G",9,1,2,0,"in","qf",2200],
  ["Egypt","G",33,1,2,0,"in","r16",12000],
  ["Iran","G",21,0,3,0,"out",null,null],
  ["New Zealand","G",88,0,1,2,"out",null,null],
 
- ["Spain","H",2,2,1,0,"in","r16",560],
+ ["Spain","H",2,2,1,0,"in","qf",475],
  ["Cabo Verde","H",70,0,3,0,"out","r32",null],
  ["Uruguay","H",17,0,2,1,"out",null,null],
  ["Saudi Arabia","H",58,0,1,2,"out",null,null],
@@ -589,7 +589,7 @@ const TEAMS = [
  ["Austria","J",24,1,1,1,"out","r32",null],
  ["Jordan","J",64,0,0,3,"out",null,null],
 
- ["Portugal","K",5,2,1,0,"in","r16",1300],
+ ["Portugal","K",5,2,1,0,"out","r16",null],
  ["Colombia","K",13,2,0,1,"in","r16",3000],
  ["Uzbekistan","K",57,0,0,3,"out",null,null],
  ["DR Congo","K",55,1,1,1,"out","r32",null],
@@ -875,8 +875,8 @@ const MATCHES = {
  93:{a:{w:87},b:{w:84},date:"7 Jul",time:"7:00am"}, 94:{a:{w:81},b:{w:82},date:"7 Jul",time:"12:00pm"},
  95:{a:{w:86},b:{w:88},date:"8 Jul",time:"4:00am"}, 96:{a:{w:85},b:{w:83},date:"8 Jul",time:"8:00am"},
  97:{a:{w:89},b:{w:90},date:"10 Jul",time:"8:00am"},
- 98:{a:{w:93},b:{w:94}}, 99:{a:{w:91},b:{w:92},date:"12 Jul",time:"9:00am"},
- 100:{a:{w:95},b:{w:96}},
+ 98:{a:{w:93},b:{w:94},date:"11 Jul",time:"7:00am"}, 99:{a:{w:91},b:{w:92},date:"12 Jul",time:"9:00am"},
+ 100:{a:{w:95},b:{w:96},date:"12 Jul",time:"1:00pm"},
  101:{a:{w:97},b:{w:98},date:"15 Jul",time:"7:00am"},
  102:{a:{w:99},b:{w:100},date:"16 Jul",time:"7:00am"},
  103:{a:{l:101},b:{l:102},date:"18 Jul",time:"7:00am"},
@@ -903,7 +903,9 @@ const RESULTS = {
  89:{a:0,b:1,w:"France"},         // Paraguay 0–1 France (Mbappé pen, 70')
  90:{a:0,b:3,w:"Morocco"},        // Canada 0–3 Morocco (Ounahi x2, Rahimi)
  91:{a:1,b:2,w:"Norway"},         // Brazil 1–2 Norway (Haaland x2, Neymar pen for Brazil)
- 92:{a:2,b:3,w:"England"}         // Mexico 2–3 England (Bellingham x2, Kane pen)
+ 92:{a:2,b:3,w:"England"},        // Mexico 2–3 England (Bellingham x2, Kane pen)
+ 93:{a:0,b:1,w:"Spain"},          // Portugal 0–1 Spain (Merino 90+', assist Ferran Torres)
+ 94:{a:1,b:4,w:"Belgium"}         // United States 1–4 Belgium (De Ketelaere x2, Vanaken, Lukaku; Tillman FK)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
@@ -1003,7 +1005,7 @@ function renderDraw(){
 
   const nIn=TEAMS.filter(t=>t[6]==='in').length;
   document.getElementById('drawnote').innerHTML =
-    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 6 Jul 2026). `+
+    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 7 Jul 2026). `+
     `Each fixture shows the team and its owning family member; Round of 16 onward fills in as winners advance.`;
 }
 
