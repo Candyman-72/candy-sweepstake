@@ -520,8 +520,8 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF_DATE = "7 July 2026";
-const ASOF = "Quarter-final line-up almost set: Spain edged Portugal 1–0 (Merino 90+1') and Belgium routed the USA 4–1 (De Ketelaere x2). Confirmed QFs — France v Morocco (Fri 10 Jul 8:00am), Spain v Belgium (Sat 11 Jul 7:00am), Norway v England (Sun 12 Jul 9:00am). Last two R16 games — Argentina v Egypt (4:00am) and Switzerland v Colombia (8:00am) — kick off tomorrow morning NZ time.";
+const ASOF_DATE = "8 July 2026";
+const ASOF = "Quarter-final line-up complete! Argentina pulled off one of the great World Cup comebacks — 2–0 down to Egypt with 11 minutes left, they won 3–2 (Romero 79', Messi 83', Enzo Fernández 90+2'). Switzerland then beat Colombia 4–3 on penalties after a 0–0 stalemate (Vargas with the decisive kick). The QFs: France v Morocco (Fri 10 Jul 8:00am), Spain v Belgium (Sat 11 Jul 7:00am), Norway v England (Sun 12 Jul 9:00am), Argentina v Switzerland (Sun 12 Jul 1:00pm) — all times NZ.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -543,7 +543,7 @@ const TEAMS = [
  ["South Korea","A",25,1,0,2,"out",null,null],
  ["Czechia","A",41,0,1,2,"out",null,null],
 
- ["Switzerland","B",19,2,1,0,"in","r16",5000],
+ ["Switzerland","B",19,2,1,0,"in","qf",5500],
  ["Canada","B",30,1,1,1,"out","r16",null],
  ["Bosnia and Herzegovina","B",71,1,1,1,"out","r32",null],
  ["Qatar","B",53,0,1,2,"out",null,null],
@@ -570,31 +570,31 @@ const TEAMS = [
  ["Tunisia","F",47,0,0,3,"out",null,null],
 
  ["Belgium","G",9,1,2,0,"in","qf",2200],
- ["Egypt","G",33,1,2,0,"in","r16",12000],
+ ["Egypt","G",33,1,2,0,"out","r16",null],
  ["Iran","G",21,0,3,0,"out",null,null],
  ["New Zealand","G",88,0,1,2,"out",null,null],
 
- ["Spain","H",2,2,1,0,"in","qf",475],
+ ["Spain","H",2,2,1,0,"in","qf",370],
  ["Cabo Verde","H",70,0,3,0,"out","r32",null],
  ["Uruguay","H",17,0,2,1,"out",null,null],
  ["Saudi Arabia","H",58,0,1,2,"out",null,null],
 
- ["France","I",1,3,0,0,"in","qf",150],
+ ["France","I",1,3,0,0,"in","qf",175],
  ["Norway","I",32,2,0,1,"in","qf",1400],
  ["Senegal","I",14,1,0,2,"out","r32",null],
  ["Iraq","I",56,0,0,3,"out",null,null],
 
- ["Argentina","J",3,3,0,0,"in","r16",425],
+ ["Argentina","J",3,3,0,0,"in","qf",390],
  ["Algeria","J",36,1,1,1,"out","r32",null],
  ["Austria","J",24,1,1,1,"out","r32",null],
  ["Jordan","J",64,0,0,3,"out",null,null],
 
  ["Portugal","K",5,2,1,0,"out","r16",null],
- ["Colombia","K",13,2,0,1,"in","r16",3000],
+ ["Colombia","K",13,2,0,1,"out","r16",null],
  ["Uzbekistan","K",57,0,0,3,"out",null,null],
  ["DR Congo","K",55,1,1,1,"out","r32",null],
 
- ["England","L",4,2,1,0,"in","qf",600],
+ ["England","L",4,2,1,0,"in","qf",480],
  ["Ghana","L",73,1,2,0,"out","r32",null],
  ["Croatia","L",11,1,1,1,"out","r32",null],
  ["Panama","L",51,0,0,2,"out",null,null]
@@ -905,7 +905,9 @@ const RESULTS = {
  91:{a:1,b:2,w:"Norway"},         // Brazil 1–2 Norway (Haaland x2, Neymar pen for Brazil)
  92:{a:2,b:3,w:"England"},        // Mexico 2–3 England (Bellingham x2, Kane pen)
  93:{a:0,b:1,w:"Spain"},          // Portugal 0–1 Spain (Merino 90+', assist Ferran Torres)
- 94:{a:1,b:4,w:"Belgium"}         // United States 1–4 Belgium (De Ketelaere x2, Vanaken, Lukaku; Tillman FK)
+ 94:{a:1,b:4,w:"Belgium"},        // United States 1–4 Belgium (De Ketelaere x2, Vanaken, Lukaku; Tillman FK)
+ 95:{a:3,b:2,w:"Argentina"},      // Argentina 3–2 Egypt (2–0 down; Romero 79', Messi 83', Enzo Fernández 90+2')
+ 96:{a:0,b:0,w:"Switzerland",pen:"4–3"} // Switzerland 0–0 Colombia (SUI win 4–3 on pens, Vargas decisive)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
@@ -1005,7 +1007,7 @@ function renderDraw(){
 
   const nIn=TEAMS.filter(t=>t[6]==='in').length;
   document.getElementById('drawnote').innerHTML =
-    `Official FIFA knockout bracket — all <b>${nIn} Round-of-32 fixtures are confirmed</b> (source: FIFA.com / CBS Sports, 7 Jul 2026). `+
+    `Official FIFA knockout bracket — <b>${nIn} teams remain</b> and the quarter-final line-up is confirmed (source: FIFA.com / ESPN / FOX Sports, 8 Jul 2026). `+
     `Each fixture shows the team and its owning family member; Round of 16 onward fills in as winners advance.`;
 }
 
