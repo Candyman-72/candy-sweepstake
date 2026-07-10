@@ -359,7 +359,7 @@
     </div>
   </div>
   <div class="wrap"><div class="statbar">
-    <div class="stat"><div class="k">Current stage</div><div class="v">Round of 16</div></div>
+    <div class="stat"><div class="k">Current stage</div><div class="v">Quarter-finals</div></div>
     <div class="stat"><div class="k">Teams remaining</div><div class="v" id="statRemain">—</div></div>
     <div class="stat"><div class="k">Sweepstake leader</div><div class="v" id="statLeader">—</div></div>
     <div class="stat"><div class="k">Final</div><div class="v">19 Jul · New Jersey</div></div>
@@ -471,8 +471,8 @@
     <table class="lb"><tbody>
       <tr><td>Group stage</td><td>11 – 27 June ✅ complete</td></tr>
       <tr><td>Round of 32</td><td>28 June – 3 July ✅ complete</td></tr>
-      <tr><td><b>Round of 16</b></td><td><b>4 – 7 July ◀ now</b></td></tr>
-      <tr><td>Quarter-finals</td><td>9 – 11 July</td></tr>
+      <tr><td>Round of 16</td><td>4 – 7 July ✅ complete</td></tr>
+      <tr><td><b>Quarter-finals</b></td><td><b>10 – 12 July ◀ now</b></td></tr>
       <tr><td>Semi-finals</td><td>14 – 15 July</td></tr>
       <tr><td>Third-place play-off</td><td>18 July</td></tr>
       <tr><td>🏆 Final</td><td>19 July · New York/New Jersey Stadium</td></tr>
@@ -511,7 +511,7 @@
 </div>
 
 <footer>
-  Built for the Candy family sweepstake · Data as of 7 July 2026 · Results &amp; odds from public sources, for fun only.
+  Built for the Candy family sweepstake · Data as of 11 July 2026 · Results &amp; odds from public sources, for fun only.
 </footer>
 
 <script>
@@ -520,8 +520,8 @@
    status: "in" (through), "pend" (final group game today), "out" (eliminated)
    stage:  "r32","r16","qf","sf","third","final","champion"  (furthest reached)
    ============================================================ */
-const ASOF_DATE = "8 July 2026";
-const ASOF = "Quarter-final line-up complete! Argentina pulled off one of the great World Cup comebacks — 2–0 down to Egypt with 11 minutes left, they won 3–2 (Romero 79', Messi 83', Enzo Fernández 90+2'). Switzerland then beat Colombia 4–3 on penalties after a 0–0 stalemate (Vargas with the decisive kick). The QFs: France v Morocco (Fri 10 Jul 8:00am), Spain v Belgium (Sat 11 Jul 7:00am), Norway v England (Sun 12 Jul 9:00am), Argentina v Switzerland (Sun 12 Jul 1:00pm) — all times NZ.";
+const ASOF_DATE = "11 July 2026";
+const ASOF = "Spain are into the semi-finals! A 2–1 win over Belgium sets up a heavyweight France v Spain semi-final — France still perfect with six wins from six, Spain unbeaten throughout. Belgium bow out at the last eight. Two quarter-finals remain: Norway v England (Sun 12 Jul 9:00am) and Argentina v Switzerland (Sun 12 Jul 1:00pm) — all times NZ — with the winners meeting in the second semi-final.";
 
 const FLAGS = {
  "Mexico":"🇲🇽","South Korea":"🇰🇷","South Africa":"🇿🇦","Czechia":"🇨🇿","Canada":"🇨🇦",
@@ -549,7 +549,7 @@ const TEAMS = [
  ["Qatar","B",53,0,1,2,"out",null,null],
 
  ["Brazil","C",6,2,1,0,"out","r16",null],
- ["Morocco","C",8,2,1,0,"in","qf",3000],
+ ["Morocco","C",8,2,1,0,"out","qf",null],
  ["Scotland","C",43,1,0,2,"out",null,null],
  ["Haiti","C",79,0,0,3,"out",null,null],
 
@@ -569,17 +569,17 @@ const TEAMS = [
  ["Sweden","F",37,1,1,1,"out","r32",null],
  ["Tunisia","F",47,0,0,3,"out",null,null],
 
- ["Belgium","G",9,1,2,0,"in","qf",2200],
+ ["Belgium","G",9,1,2,0,"out","qf",null],
  ["Egypt","G",33,1,2,0,"out","r16",null],
  ["Iran","G",21,0,3,0,"out",null,null],
  ["New Zealand","G",88,0,1,2,"out",null,null],
 
- ["Spain","H",2,2,1,0,"in","qf",370],
+ ["Spain","H",2,2,1,0,"in","sf",370],
  ["Cabo Verde","H",70,0,3,0,"out","r32",null],
  ["Uruguay","H",17,0,2,1,"out",null,null],
  ["Saudi Arabia","H",58,0,1,2,"out",null,null],
 
- ["France","I",1,3,0,0,"in","qf",175],
+ ["France","I",1,3,0,0,"in","sf",175],
  ["Norway","I",32,2,0,1,"in","qf",1400],
  ["Senegal","I",14,1,0,2,"out","r32",null],
  ["Iraq","I",56,0,0,3,"out",null,null],
@@ -907,7 +907,9 @@ const RESULTS = {
  93:{a:0,b:1,w:"Spain"},          // Portugal 0–1 Spain (Merino 90+', assist Ferran Torres)
  94:{a:1,b:4,w:"Belgium"},        // United States 1–4 Belgium (De Ketelaere x2, Vanaken, Lukaku; Tillman FK)
  95:{a:3,b:2,w:"Argentina"},      // Argentina 3–2 Egypt (2–0 down; Romero 79', Messi 83', Enzo Fernández 90+2')
- 96:{a:0,b:0,w:"Switzerland",pen:"4–3"} // Switzerland 0–0 Colombia (SUI win 4–3 on pens, Vargas decisive)
+ 96:{a:0,b:0,w:"Switzerland",pen:"4–3"}, // Switzerland 0–0 Colombia (SUI win 4–3 on pens, Vargas decisive)
+ 97:{a:2,b:0,w:"France"},         // France 2–0 Morocco (Mbappé 60', Dembélé 66')
+ 98:{a:2,b:1,w:"Spain"}           // Spain 2–1 Belgium (Spain into semis)
 };
 function winnerOf(id){ return RESULTS[id] ? RESULTS[id].w : null; }
 function loserOf(id){
